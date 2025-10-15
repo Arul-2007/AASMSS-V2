@@ -370,16 +370,20 @@ style.textContent{
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   position: fixed;
-  bottom: 0;
+  bottom: 20px;
   left: 0;
   right: 0;
-  height: 70px;
+  height: 80px;
   z-index: 10;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
 /* Tab buttons */
+.tab-nav button {
+  position: relative;
+  z-index: 5;
+}
 .tab-nav button {
   flex: 1;
   display: flex;
@@ -403,6 +407,7 @@ style.textContent{
 .tab-nav button span {
   font-size: 0.7rem;
 }
+
 
 /* Active Tab – Glow Effect */
 .tab-nav button.active {
