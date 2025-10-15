@@ -747,12 +747,10 @@ showLoginGuide();
     }
 
     // ✅ Show toast
-    const toast = document.getElementById("toast");
-toast.textContent = `✅ ${status} - ${type} (Period ${periodIndex + 1})`;
-    toast.style.display = "block";
-    setTimeout(() => { toast.style.display = "none"; }, 3000);
-  }
+   showNotification(`✅ Attendance marked for Period ${periodIndex + 1} (${type})`, "success");
 
+  document.getElementById("feedback").textContent = `✅ ${status} recorded for Period ${periodIndex + 1}`;
+}
   // ================== QR SCANNER CONTROL ==================
   let html5QrCode;
   let scanning = false;
@@ -1156,6 +1154,31 @@ function showLoginGuide() {
   }, 5000);
 }
 
+function showNotification(message, type = "info") {
+  const toast = document.getElementById("toast");
+
+  // Style based on type
+  if (type === "success") {
+    toast.style.background = "#4CAF50"; // green
+  } else if (type === "warning") {
+    toast.style.background = "#FFC107"; // amber
+  } else if (type === "error") {
+    toast.style.background = "#F44336"; // red
+  } else {
+    toast.style.background = "#4e54c8"; // default
+  }
+
+  toast.textContent = message;
+  toast.style.display = "block";
+  toast.style.opacity = 1;
+
+  // Fade out after 4s
+  setTimeout(() => {
+    toast.style.transition = "opacity 0.5s";
+    toast.style.opacity = 0;
+    setTimeout(() => (toast.style.display = "none"), 500);
+  }, 4000);
+}
 
 </script>
 
