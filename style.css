@@ -1,0 +1,485 @@
+/* ================== RESET & BASE ================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+body {
+  background: #f4f6fb;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* ================== LOGIN SECTION ================== */
+#loginSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #0f9b8e 100%);
+
+
+
+
+}
+
+.login-box {
+  background: #b4d9db;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-box h1 {
+  color: #4e54c8;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.login-box label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  transition: 0.3s;
+}
+
+.login-box input:focus {
+  border-color: #4e54c8;
+  box-shadow: 0 0 5px rgba(78, 84, 200, 0.4);
+  outline: none;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background: #4e54c8;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box button:hover {
+  background: #3b3fc1;
+}
+
+#status {
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
+/* ================== DASHBOARD HEADER ================== */
+header {
+  background: #4e54c8;
+  color: #ffffff;
+  padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.15rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+header button {
+  background: #fff;
+  color: #4e54c8;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+header button:hover {
+  background: #e6e6ff;
+}
+
+/* ================== MAIN CONTENT ================== */
+main {
+  padding: 100px 20px 90px;
+}
+
+/* ================== TABS ================== */
+.tab {
+  display: none;
+  animation: fadeIn 0.4s ease-in-out;
+}
+.tab.active {
+  display: block;
+}
+
+.tab-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #6a68e6;
+  border-top: 1px solid #ddd;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  z-index: 10;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tab-nav button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.85rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab-nav button span {
+  font-size: 0.7rem;
+}
+
+.tab-nav button.active {
+  color: #4e54c8;
+}
+
+/* ================== QR SCANNER ================== */
+#reader {
+  width: 90%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  margin: 20px auto;
+  border-radius: 15px;
+  border: 3px solid #4e54c8;
+  background: #f9f9f9;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  #reader {
+    width: 95%;
+    max-width: 95%;
+    aspect-ratio: 1 / 1;
+    border-width: 2px;
+  }
+}
+
+/* ================== FEEDBACK & TOAST ================== */
+#feedback {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 12px;
+  color: #4e54c8;
+}
+
+#toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4e54c8;
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 10px;
+  display: none;
+  font-weight: bold;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+/* ================== TABLE ================== */
+.table-container {
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+th, td {
+  padding: 12px 8px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+}
+
+th {
+  background: #4e54c8;
+  color: #fff;
+  font-weight: 600;
+}
+
+td.present {
+  background: #c8e6c9;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+td.late {
+  background: #ffe0b2;
+  color: #ef6c00;
+  font-weight: 600;
+}
+
+td.absent {
+  background: #ffcdd2;
+  color: #c62828;
+  font-weight: 600;
+}
+
+td.notmarked {
+  background: #f5f5f5;
+  color: #888;
+  font-style: italic;
+}
+/* 🎯 Toast styling */
+#toastGuide {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 9999;
+}
+
+/* ✨ Arrow pointer animation */
+#scannerArrow {
+  position: fixed;
+  bottom: 100px;
+  right: 50px;
+  font-size: 28px;
+  color: #ffcc00;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: bounceArrow 1.2s infinite ease-in-out;
+  z-index: 9999;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(5px); }
+  50% { transform: translateY(-5px); }
+}
+/* Arrow pointer in bottom-left corner */
+#scannerArrow {
+  position: fixed;
+  bottom: 20px;   /* distance from bottom */
+  left: 20px;     /* distance from left */
+  font-size: 28px;
+  color: #ffcc00;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: bounceArrow 1.2s infinite ease-in-out;
+  z-index: 9999;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+
+/* ================== ANIMATION ================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+style.textContent{
+@keyframes tabClick {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+};}
+/* ================== RESPONSIVE ================== */
+
+@media (min-width: 601px) and (max-width: 900px) {
+  #reader { height: 300px; }
+}
+#dashboardSection {
+  display: none; /* Hide dashboard by default */
+}
+
+#loginSection {
+  display: flex; /* Show only login page initially */
+}
+#loginSection, #dashboardSection {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+/* ================== TAB NAVIGATION (Upgraded Glow Version) ================== */
+.tab-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  z-index: 10;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Tab buttons */
+.tab-nav button {
+  position: relative;
+  z-index: 5;
+}
+.tab-nav button {
+  flex: 1;
+   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.85rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  border-radius: 14px;
+  margin: 6px;
+  padding: 6px 0;
+}
+
+
+/* Text and icons */
+.tab-nav button span {
+  font-size: 0.7rem;
+}
+
+
+/* Active Tab – Glow Effect */
+.tab-nav button.active {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(78, 84, 200, 0.8), rgba(0, 180, 255, 0.8));
+  box-shadow: 0 0 20px rgba(78, 84, 200, 0.6);
+  transform: translateY(-3px);
+}
+
+/* Smooth glow animation */
+.tab-nav button.active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(78, 84, 200, 0.7), 0 0 35px rgba(0, 180, 255, 0.6);
+  opacity: 0.8;
+  z-index: -1;
+  transition: all 0.4s ease-in-out;
+  filter: blur(8px);
+}
+
+/* Hover for inactive tabs */
+.tab-nav button:not(.active):hover {
+  background: rgba(78, 84, 200, 0.08);
+  color: #4e54c8;
+  box-shadow: inset 0 0 10px rgba(78, 84, 200, 0.1);
+}
+@keyframes spin {
+  0% {transform:rotate(0deg);}
+  100% {transform:rotate(360deg);}
+}
+/* ================== REFRESH BUTTON ================== */
+.refresh-btn {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  position: relative;
+  color: #00bfff;
+  font-size: 30px;
+
+}
+
+
+/* Hover glow */
+.refresh-btn:hover {
+    background: rgba(0, 180, 255, 0.15);
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.4);
+  transform: scale(1.1);
+}
+
+/* Click rotation animation */
+.refresh-btn:active i {
+  animation: spin 0.6s linear;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+/*the code for the logout button animation*/
+.logout-btn {
+  background: linear-gradient(135deg, rgba(0,180,255,0.8), rgba(0,120,255,0.8));
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(0,150,255,0.3);
+  backdrop-filter: blur(4px);
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(0,200,255,1), rgba(0,130,255,1));
+  box-shadow: 0 0 18px rgba(0,200,255,0.7);
+}
+
+.logout-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 8px rgba(0,150,255,0.5);
+}
