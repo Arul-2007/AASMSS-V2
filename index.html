@@ -32,7 +32,7 @@
     <h1>AASMS Login</h1>
     <form id="loginForm">
       <label>Email (must end with @ksrce.ac.in)</label>
-      <input type="email" id="email" required />
+      <input type="email" id="email" required autofocus />
       <label>Password</label>
       <input type="password" id="password" required />
       <button type="submit">Login</button>
@@ -96,8 +96,7 @@
     <button onclick="openTab('timetableTab', this)"class="tab-content">📅<span>Timetable</span></button>
   </div>
 </section>
-<div id="scannerArrow">⬇️</div>
-<div id="toastGuide">✅ Login successful!</div>
+<div id="toast">✅ Login successful!</div>
 <script src="script.js"></script>
 </body>
 </html>
