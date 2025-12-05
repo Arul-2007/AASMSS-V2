@@ -445,7 +445,6 @@ style.textContent{
   background: linear-gradient(135deg, rgba(0,200,255,1), rgba(0,130,255,1));
   box-shadow: 0 0 18px rgba(0,200,255,0.7);
 }
-
 .logout-btn:active {
   transform: scale(0.96);
   box-shadow: 0 0 8px rgba(0,150,255,0.5);
