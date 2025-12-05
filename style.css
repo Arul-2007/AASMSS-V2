@@ -170,6 +170,9 @@ main {
 .tab-nav button.active {
   color: #4e54c8;
 }
+main {
+  padding-bottom: 90px; /* prevents content from going under the bottom nav */
+}
 
 /* ================== QR SCANNER ================== */
 #reader {
@@ -283,42 +286,6 @@ td.notmarked {
   transition: opacity 0.5s ease;
   z-index: 9999;
 }
-
-/* ✨ Arrow pointer animation */
-#scannerArrow {
-  position: fixed;
-  bottom: 100px;
-  right: 50px;
-  font-size: 28px;
-  color: #ffcc00;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: bounceArrow 1.2s infinite ease-in-out;
-  z-index: 9999;
-}
-
-@keyframes bounceArrow {
-  0%, 100% { transform: translateY(5px); }
-  50% { transform: translateY(-5px); }
-}
-/* Arrow pointer in bottom-left corner */
-#scannerArrow {
-  position: fixed;
-  bottom: 20px;   /* distance from bottom */
-  left: 20px;     /* distance from left */
-  font-size: 28px;
-  color: #ffcc00;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: bounceArrow 1.2s infinite ease-in-out;
-  z-index: 9999;
-}
-
-@keyframes bounceArrow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
 
 /* ================== ANIMATION ================== */
 @keyframes fadeIn {
