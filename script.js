@@ -293,60 +293,87 @@ try {
   console.error("⚠️ Failed to load today's attendance:", error);
   atBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">Failed to load attendance</td></tr>`;
 }
-  // ================== QR SCANNER CONTROL ==================
-  let lastScanTime = 0;
-   onScanSuccess=function(decodedText) {
-     const feedback = document.getElementById("feedback"); 
-    const now = new Date();
-    const currentTime = now.getTime();
-    if (currentTime - lastScanTime < 5000) return;
-    lastScanTime = currentTime;
-    
-    feedback.textContent = "✅ Scanned successfully!";
-    feedback.style.color = "green";
+// ================== QR SCANNER CONTROL ==================
+function normalizeSubject(sub) {
+  return sub.replace(/[^a-z]/gi, "").toLowerCase();
+}
 
-    const periodIndex = getPeriodIndex(now);
-    if (periodIndex === -1) {
-      document.getElementById("feedback").textContent = "❌ Not within class time!";
-      return;
+let lastScanTime = 0;
+
+onScanSuccess = function(decodedText) {
+  const feedback = document.getElementById("feedback");
+  const now = new Date();
+  const currentTime = now.getTime();
+  if (currentTime - lastScanTime < 5000) return;
+  lastScanTime = currentTime;
+
+  feedback.textContent = "✅ Scanned successfully!";
+  feedback.style.color = "green";
+
+  const periodIndex = getPeriodIndex(now);
+  if (periodIndex === -1) {
+    feedback.textContent = "❌ Not within class time!";
+    return;
+  }
+
+  const text = decodedText.trim().toUpperCase().replace(/\s+/g, "");
+  const todayName = now.toLocaleDateString("en-US", { weekday: "long" });
+  const todaySchedule = student.timetable ? student.timetable[todayName] : null;
+
+  if (!todaySchedule) {
+    feedback.textContent = "❌ No timetable available today!";
+    return;
+  }
+
+  const periodKey = Object.keys(todaySchedule)[periodIndex];
+  if (!todaySchedule[periodKey]) {
+    feedback.textContent = "❌ No class scheduled!";
+    return;
+  }
+
+  const subject = todaySchedule[periodKey].subject;
+
+  function markContinuousPeriods(type, subject) {
+    const baseSub = normalizeSubject(subject);
+    let markedCount = 0;
+
+    for (let i = periodIndex + 1; i < periods.length; i++) {
+      const nextKey = Object.keys(todaySchedule)[i];
+      const nextRow = todaySchedule[nextKey];
+      if (!nextRow || !nextRow.subject) break;
+
+      const nextSub = normalizeSubject(nextRow.subject);
+      if (nextSub !== baseSub) break;
+
+      markedCount++;
+      markAttendance(studentId, i, getStatus(i, now), now, type);
     }
-    const text = decodedText.trim().toUpperCase().replace(/\s+/g, "");
- const todayName = now.toLocaleDateString("en-US", { weekday: "long" });
-const todaySchedule = student.timetable ? student.timetable[todayName] : null;
 
-if (!todaySchedule) {
-  document.getElementById("feedback").textContent = "❌ No timetable available today!";
-  return;
-}
-
-const periodKey = Object.keys(todaySchedule)[periodIndex];
-if (!todaySchedule[periodKey]) {
-  document.getElementById("feedback").textContent = "❌ No class scheduled!";
-  return;
-}
-
-    const subject = todaySchedule[periodKey].subject;
-    if (text === "NORMALCLASSROOM") {
-      markAttendance(studentId, periodIndex, getStatus(periodIndex, now), now, "Normal");
-      // Mark consecutive lab periods if any
-      if (subject.toLowerCase().includes("lab")) {
-        for (let i = periodIndex + 1; i < periods.length; i++) {
-          const nextKey = Object.keys(todaySchedule)[i];
-          if (todaySchedule[nextKey] && todaySchedule[nextKey].subject === subject) {
-            markAttendance(studentId, i, getStatus(i, now), now, "Normal");
-          } else break;
-        }
-      }
-    } else if (text === "SKILLCLASSROOM") {
-      markAttendance(studentId, periodIndex, getStatus(periodIndex, now), now, "Skill");
-    } else {
-      document.getElementById("feedback").textContent = "❌ Invalid QR Code!";
+    if (markedCount > 0) {
+      showNotification(
+        `Marked for ${markedCount + 1} total periods (${subject})`,
+        "success"
+      );
     }
   }
-  onScanFailure=function(err) {
-    console.warn("Scan failed:", err);
-    document.getElementById("feedback").textContent = "Scanning...";
-  };
+
+  if (text === "NORMALCLASSROOM") {
+    markAttendance(studentId, periodIndex, getStatus(periodIndex, now), now, "Normal");
+    markContinuousPeriods("Normal", subject);
+
+  } else if (text === "SKILLCLASSROOM") {
+    markAttendance(studentId, periodIndex, getStatus(periodIndex, now), now, "Skill");
+    markContinuousPeriods("Skill", subject);
+
+  } else {
+    feedback.textContent = "❌ Invalid QR Code!";
+  }
+};
+
+onScanFailure = function(err) {
+  console.warn("Scan failed:", err);
+  document.getElementById("feedback").textContent = "Scanning...";
+};
 }
   // ================== AUTO LOGIN ==================
   function openTab(tabId, btn) {
@@ -455,7 +482,7 @@ function refreshPage() {
 }
 function showLoginGuide() {
   const toast = document.getElementById("toast");
-  if (!toast || !arrow) return; // safety
+  if (!toast) return; // safety
 
   toast.style.opacity = 1;
 
