@@ -1,5 +1,6 @@
   let onScanSuccess;
 let onScanFailure;
+
   // ================= Firebase ==================
 const firebaseConfig = {
     apiKey: "AIzaSyB8T7Y692ytTeHlfdAPQ9fOvZ3e2qEPTKs",
