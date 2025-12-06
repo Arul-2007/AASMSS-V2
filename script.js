@@ -202,14 +202,20 @@ await html5QrCode.start(
   }
 }
 // ✅ Pause camera when tab is hidden or minimized
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden && scanning && html5QrCode) {
-      html5QrCode.stop().then(() => {
-        scanning = false;
-        console.log("Camera stopped because tab is hidden");
-      }).catch(err => console.error("Stop failed", err));
+document.addEventListener("visibilitychange", () => {
+  const isScannerTabActive = document.getElementById("scannerTab").classList.contains("active");
+
+  if (document.hidden) {
+    if (scanning && html5QrCode) {
+      html5QrCode.stop().then(() => scanning = false);
     }
-  });
+  } else {
+    if (isScannerTabActive && !scanning) {
+      startScanner(onScanSuccess, onScanFailure);
+    }
+  }
+});
+
 // ================== DASHBOARD ==================
 async function initDashboard(studentId, student) {
   // ================= TIMETABLE =================
@@ -376,21 +382,31 @@ onScanFailure = function(err) {
 };
 }
   // ================== AUTO LOGIN ==================
-  function openTab(tabId, btn) {
+ function openTab(tabId, btn) {
   document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
   document.querySelectorAll(".tab-nav button").forEach(b => b.classList.remove("active"));
+
   document.getElementById(tabId).classList.add("active");
   btn.classList.add("active");
-  // subtle vibration or glow animation
-  btn.style.animation = "tabClick 0.25s ease";
-  setTimeout(() => (btn.style.animation = ""), 250);
-  // ✅ Auto-start scanner when switching to scanner tab
- if (tabId === "scannerTab" && !scanning) {
-  setTimeout(() => startScanner(onScanSuccess, onScanFailure), 500);
+
+  // Stop scanner if leaving scanner tab
+  if (tabId !== "scannerTab" && scanning && html5QrCode) {
+    html5QrCode.stop().then(() => scanning = false);
+  }
+
+  // Start scanner when Scanner tab becomes active
+  if (tabId === "scannerTab" && !scanning) {
+    setTimeout(() => startScanner(onScanSuccess, onScanFailure), 500);
+  }  
 }
-}
+
 const style = document.createElement("style");
 document.head.appendChild(style);
+   window.addEventListener("beforeunload", () => {
+  if (html5QrCode && scanning) {
+    html5QrCode.stop().catch(() => {});
+  }
+});
 function logout() {
     alert("Logging out...");
     // Stop QR scanner safely
@@ -398,6 +414,8 @@ function logout() {
         html5QrCode.stop().catch(() => {});
         scanning = false;
     }
+ 
+
     // Fade out dashboard
     dashboardSection.style.opacity = 0;
     setTimeout(() => {
